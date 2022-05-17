@@ -22,11 +22,19 @@ function menu_fetcher_activate(){
 register_activation_hook( __FILE__, 'menu_fetcher_activate' );
 
 add_action( 'admin_menu', 'my_admin_menu' );
+add_action( 'admin_menu', 'my_admin_submenu' );
 
 function menu_fetcher_page() {
+    require plugin_dir_path( __FILE__ ) . 'menu-fetcher-admin.php';
+}
+function menu_fetcher_submenu_page() {
     require plugin_dir_path( __FILE__ ) . 'menu-fetcher-admin.php';
 }
 
 function my_admin_menu() {
 	add_menu_page( 'Menu Fetcher', 'Menu Fetcher', 'manage_options', 'menu-fetcher', 'menu_fetcher_page', 'dashicons-menu', 6 );
+}
+
+function my_admin_submenu() {
+    add_submenu_page( 'menu-fetcher', 'Catagories', 'Submenu Page Title', 'manage_options', 'submenu-handle', 'my_admin_submenu_page' );
 }
