@@ -68,18 +68,18 @@ $category = json_decode(file_get_contents($url));
 
 
 /*Inserting Category first*/
-// echo "Category";
-// for($i=0;$i<count($category);$i++){
-//     $cat=wp_insert_category( array(
-//         'cat_name' => $category[$i]->name,
-//         'category_description' => '',
-//         'category_nicename' => $category[$i]->name,
-//         'category_parent' => 0,
-//         'taxonomy' => 'menucats',
-//     ) );
-//     echo $cat;
-//     echo '<br>';
-// }
+echo "Category";
+for($i=0;$i<count($category);$i++){
+    $cat=wp_insert_category( array(
+        'cat_name' => $category[$i]->name,
+        'category_description' => '',
+        'category_nicename' => $category[$i]->name,
+        'category_parent' => 0,
+        'taxonomy' => 'menucats',
+    ) );
+    echo $cat;
+    echo '<br>';
+}
 
 // Wp_posts Table
 for($i=0;$i<count($result);$i++){
@@ -102,13 +102,20 @@ for($i=0;$i<count($result);$i++){
          );
          echo $insert;
          echo '<br>';
+         $catid = get_term_by( 'slug', strtolower($result[$i]->categoryName),'menucats', 'ARRAY_A', 'single' );
+        // echo $catid['term_id'];
+        wp_set_post_terms($insert,$catid['term_id'], 'menucats' );
     }
+    
     
 }
 
 
-// $catid = get_term_by( 'slug', 'drinks','menucats', 'ARRAY_A', 'single' );
-// wp_set_post_terms(10915,array($catid['term_id']),false);
+// $catid = get_term_by( 'slug', strtolower(),'menucats', 'ARRAY_A', 'single' );
+
+// echo $catid['term_id'];
+// var_dump(wp_set_post_terms(11045, 130, 'menucats' ));
+//var_dump(wp_set_post_categories(11045,130));
 
 // echo $catid['term_id'];
 
